@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>tofreq — RF Planning Tools</title>
+<meta name="description" content="RF Planning & Telecom Automation Tools for QGIS. QuickSector and QuickSite — built by engineers, for engineers.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #2a2a2a;
+    --surface: #323232;
+    --border: #3a3a3a;
+    --text: #d8d8d8;
+    --muted: #555;
+    --accent: #e8c800;
+    --accent2: #00c49a;
+    --font-head: 'Syne', sans-serif;
+    --font-mono: 'DM Mono', monospace;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-weight: 300;
+    min-height: 100vh;
+  }
+
+  main {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* Nav */
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2.5rem 0;
+  }
+
+  .logo {
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: -0.01em;
+    color: var(--accent);
+  }
+
+  .nav-tag {
+    font-size: 0.68rem;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  /* Hero */
+  .hero {
+    padding: 5rem 0 5rem;
+    animation: fadeUp 0.7s ease both;
+  }
+
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.68rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 2.5rem;
+  }
+
+  .status-dot {
+    width: 5px; height: 5px;
+    background: var(--accent2);
+    border-radius: 50%;
+    animation: blink 2.5s infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.2; }
+  }
+
+  .hero h1 {
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: clamp(3.2rem, 9vw, 6.5rem);
+    line-height: 0.92;
+    letter-spacing: -0.04em;
+    color: #fff;
+    margin-bottom: 2rem;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 460px;
+  }
+
+  /* Tools */
+  .tools {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin: 4rem 0;
+    animation: fadeUp 0.7s 0.15s ease both;
+  }
+
+  .tool-card {
+    background: var(--surface);
+    padding: 2rem 1.75rem;
+    transition: background 0.25s;
+  }
+
+  .tool-card:hover { background: #141414; }
+
+  .tool-num {
+    font-size: 0.62rem;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+  }
+
+  .tool-name {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 1.4rem;
+    letter-spacing: -0.02em;
+    color: #fff;
+    margin-bottom: 0.6rem;
+  }
+
+  .tool-desc {
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.65;
+    margin-bottom: 1.25rem;
+  }
+
+  .tool-badge {
+    font-size: 0.62rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 2px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: rgba(0,196,154,0.08);
+    color: var(--accent2);
+    border: 1px solid rgba(0,196,154,0.15);
+  }
+
+  /* CTA */
+  .cta-section {
+    padding: 0 0 6rem;
+    animation: fadeUp 0.7s 0.3s ease both;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin-bottom: 3.5rem;
+  }
+
+  .cta-title {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 1.3rem;
+    letter-spacing: -0.02em;
+    color: #fff;
+    margin-bottom: 0.75rem;
+  }
+
+  .cta-desc {
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.75;
+    max-width: 420px;
+    margin-bottom: 2rem;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.7rem 1.3rem;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: all 0.2s;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #000;
+    font-weight: 400;
+  }
+
+  .btn-primary:hover {
+    background: #fff;
+    box-shadow: 0 0 24px rgba(232,200,0,0.2);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border);
+  }
+
+  .btn-ghost:hover {
+    color: var(--text);
+    border-color: #333;
+  }
+
+  /* Footer */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 1.75rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 820px;
+    margin: 0 auto;
+    font-size: 0.68rem;
+    color: var(--muted);
+  }
+
+  footer a {
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  footer a:hover { color: var(--text); }
+  .footer-links { display: flex; gap: 1.5rem; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 580px) {
+    .tools { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+    .hero h1 { font-size: 3rem; }
+  }
+</style>
+</head>
+<body>
+
+<main>
+  <nav>
+    <div class="logo">tofreq</div>
+    <div class="nav-tag">RF Planning Tools</div>
+  </nav>
+
+  <section class="hero">
+    <div class="status-pill">
+      <span class="status-dot"></span>
+      Coming Soon
+    </div>
+
+    <h1>RF Planning<br><em>for QGIS.</em></h1>
+
+    <p class="hero-sub">
+      Plugins for telecom engineers who want to visualize and plan faster —
+      without leaving QGIS.
+    </p>
+  </section>
+
+  <div class="tools">
+    <div class="tool-card">
+      <div class="tool-num">01 / QuickSector</div>
+      <div class="tool-name">QuickSector</div>
+      <div class="tool-desc">Single-site sector design. Set azimuth, beamwidth, and tilt — export clean KML with popup tables.</div>
+      <span class="tool-badge">Free</span>
+    </div>
+    <div class="tool-card">
+      <div class="tool-num">02 / QuickSite</div>
+      <div class="tool-name">QuickSite</div>
+      <div class="tool-desc">Bulk CSV import → multi-site → multi-layer KML. Entire network in one export.</div>
+      <span class="tool-badge">Free</span>
+    </div>
+  </div>
+
+  <section class="cta-section">
+    <hr class="divider">
+    <div class="cta-title">Want early access?</div>
+    <p class="cta-desc">
+      Reach out on LinkedIn or send an email. Both plugins are free to use.
+    </p>
+    <div class="cta-buttons">
+      <a class="btn btn-primary" href="https://www.linkedin.com/in/tofreq/" target="_blank">↗ LinkedIn</a>
+      <a class="btn btn-ghost" href="mailto:nattawut.prommayom@gmail.com">nattawut.prommayom@gmail.com</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>© 2025 tofreq</span>
+  <div class="footer-links">
+    <a href="https://www.linkedin.com/in/tofreq/" target="_blank">LinkedIn</a>
+    <a href="mailto:nattawut.prommayom@gmail.com">Email</a>
+  </div>
+</footer>
+
+</body>
+</html>
