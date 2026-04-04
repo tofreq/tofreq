@@ -479,6 +479,17 @@ footer {
   border-bottom: 1px solid var(--border2);
   border-right: 1px solid var(--border2);
 }
+  @media (max-width: 768px) {
+  html, body { overflow: auto; height: auto; }
+  .console { height: auto; grid-template-rows: 48px auto 52px; }
+  .body { grid-template-columns: 1fr; grid-template-rows: auto; }
+  .panel-hero, .panel-info, .panel-tool { padding: 24px 20px; }
+  .header-dividers { display: none; }
+  .hero-headline { font-size: 2.2rem; }
+  .info-grid { grid-template-columns: 1fr 1fr; }
+  .tool-footer { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .btn-run { width: 100%; justify-content: center; }
+}
 </style>
 </head>
 <body>
